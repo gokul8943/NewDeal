@@ -23,4 +23,7 @@ export class UserUsecase {
     async saveOtp(data: { email: string, otp: string }) {
         return this.UserRepository.saveOtp(data)
     }
+    async otpVerify(email:string){
+        return this.UserRepository.otpVerify(email)
+    }
 }

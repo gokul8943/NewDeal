@@ -3,6 +3,8 @@ import bcrypt from 'bcrypt'
 import otpGenerator from 'otp-generator';
 import { UserUsecase } from "../../usecase/user.usecase";
 import transporter from "../../framework/services/nodemailer";
+import Handlebars from "handlebars";
+import fs from "fs"
 
 export class UserController {
     private readonly userUsecase: UserUsecase;
@@ -106,5 +108,24 @@ export class UserController {
             console.log(error.message);
             return res.status(500).json({ success: false, error: error.message });
         }
+    }
+
+    async otpVerify(req:Request,res:Response){
+        const email = req.body.email
+        const otp = req.body.otp
+        const response = await this.userUsecase.otpVerify(email)
+        if (response.length === 0 || otp !== response[0].otp) {
+            return res.status(400).json({
+                success: false,
+                message: 'The OTP is not valid',
+            });
+        }
+        res.status(200).json({ message: 'verification successful' })
+    }
+    renderTemplate(data: { otp: string }) {
+        const templatePath = '../../utils/email-template.hbs';
+        const templateContent = fs.readFileSync(templatePath, 'utf8');
+        const template = Handlebars.compile(templateContent);
+        return template(data);
     }
 }

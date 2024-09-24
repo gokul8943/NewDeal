@@ -43,4 +43,8 @@ export class userRepository {
     async saveOtp(data: { email: string, otp: string }) {
         let newOtp = await this.OTPModel.create(data)
     }
+    async otpVerify(email: string) {
+        let response = await this.OTPModel.find({ email }).sort({ createdAt: -1 }).limit(1);
+        return response
+    }
 }
