@@ -11,4 +11,7 @@ export class UserUsecase{
     async isUserExist(email: string): Promise<any> {
         return this.UserRepository.isUserExist(email)
     }
+    async login(user: UserEntity): Promise<any> {
+        return this.UserRepository.login(user)
+    }
 }

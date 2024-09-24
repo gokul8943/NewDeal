@@ -30,4 +30,7 @@ export class userRepository{
             return false;
         }
     }
+    async login(user: UserEntity): Promise<void> {
+
+    }
 }
