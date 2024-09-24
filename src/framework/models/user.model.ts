@@ -1,5 +1,6 @@
 import moment from "moment-timezone";
 import mongoose, { Schema } from "mongoose";
+import { IUserSchema } from "../../adapters/interfaces/IUserSchema";
 
 
 // Define the Payment schema
@@ -11,20 +12,20 @@ const PaymentSchema = new Schema({
 });
 
 // Create the User schema
-const userSchema = new Schema<IUser>({
-    username: {
+const userSchema = new Schema<IUserSchema>({
+    name: {
         type: String,
         required: true,
     },
-    phonenumber: {
-        type: String,
+    phoneNumber: {
+        type: Number,
     },
     email: {
         type: String,
         required: true,
         unique: true,
     },
-    isGoogle: {
+    googleId: {
         type: Boolean,
         required: true,
     },
@@ -67,6 +68,6 @@ PaymentSchema.pre('save', function (next) {
 });
 
 // Create the User model
-const User = mongoose.model<IUser>('User', userSchema);
+const User = mongoose.model<IUserSchema>('User', userSchema);
 
 export default User;
