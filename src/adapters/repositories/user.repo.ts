@@ -6,7 +6,7 @@ import { IOTPSchema } from "../interfaces/IOTPSchema"
 
 
 
-export class userRepository{
+export class userRepository {
     private readonly UserModel: Model<IUserSchema>
     private readonly OTPModel: Model<IOTPSchema>
     constructor(userModel: Model<IUserSchema>, otpModel: Model<IOTPSchema>) {
@@ -15,7 +15,7 @@ export class userRepository{
     }
     async register(userData: UserEntity): Promise<any> {
         try {
-            const user = await userModel.create(userData)  
+            const user = await userModel.create(userData)
             return user;
         } catch (error) {
             console.error("An error occoured", error)
@@ -32,5 +32,15 @@ export class userRepository{
     }
     async login(user: UserEntity): Promise<void> {
 
+    }
+    async sendOtp(email: string) {
+
+    }
+    async findOtp(otp: string) {
+        let result = await this.OTPModel.findOne({ otp: otp });
+        return result
+    }
+    async saveOtp(data: { email: string, otp: string }) {
+        let newOtp = await this.OTPModel.create(data)
     }
 }

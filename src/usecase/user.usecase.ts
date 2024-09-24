@@ -2,8 +2,8 @@ import { userRepository } from "../adapters/repositories/user.repo"
 import { UserEntity } from "../entity/user.entity"
 
 
-export class UserUsecase{
-    constructor(private UserRepository: userRepository){}
+export class UserUsecase {
+    constructor(private UserRepository: userRepository) { }
 
     async register(user: UserEntity): Promise<any> {
         return this.UserRepository.register(user)
@@ -13,5 +13,14 @@ export class UserUsecase{
     }
     async login(user: UserEntity): Promise<any> {
         return this.UserRepository.login(user)
+    }
+    async sendOtp(email: string): Promise<void> {
+        return this.UserRepository.sendOtp(email)
+    }
+    async findOtp(otp: string) {
+        return this.UserRepository.findOtp(otp)
+    }
+    async saveOtp(data: { email: string, otp: string }) {
+        return this.UserRepository.saveOtp(data)
     }
 }

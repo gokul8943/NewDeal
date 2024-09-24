@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import bcrypt from 'bcrypt'
+import otpGenerator from 'otp-generator';
 import { UserUsecase } from "../../usecase/user.usecase";
+import transporter from "../../framework/services/nodemailer";
 
 export class UserController {
     private readonly userUsecase: UserUsecase;
@@ -47,6 +49,62 @@ export class UserController {
             res.status(406).json({
                 message: 'Wrong password'
             });
+        }
+    }
+
+    async sentOtp(req: Request, res: Response) {
+        try {
+            const { email } = req.body;
+            console.log(req.body.email);
+
+            if (!email) {
+                return
+            }
+
+            const checkUserPresent = await this.userUsecase.isUserExist(email)
+            console.log(checkUserPresent);
+
+            if (checkUserPresent) {
+                return res.status(401).json({
+                    success: false,
+                    message: 'User already exists',
+                });
+            }
+            let otp = otpGenerator.generate(6, {
+                upperCaseAlphabets: false,
+                lowerCaseAlphabets: false,
+                specialChars: false,
+            });
+            var mailOptions = {
+                from: process.env.EMAIL,
+                to: email,
+                subject: 'OTP for Email Verification',
+                text: `Your OTP for Verification is ${otp}`
+            };
+            transporter.sendMail(mailOptions, function (error: Error | null, info: any) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                    console.log('otp ', otp);
+                }
+            });
+            let result = await this.userUsecase.findOtp(otp)
+            while (result) {
+                otp = otpGenerator.generate(6, {
+                    upperCaseAlphabets: false,
+                });
+                result = await this.userUsecase.findOtp(otp)
+            }
+            const otpPayload = { email, otp };
+            const otpBody = await this.userUsecase.saveOtp(otpPayload)
+            res.status(200).json({
+                success: true,
+                message: 'OTP sent successfully',
+            });
+        } catch (error: any) {
+            console.log(error.message);
+            return res.status(500).json({ success: false, error: error.message });
         }
     }
 }
