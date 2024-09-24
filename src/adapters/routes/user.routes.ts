@@ -19,3 +19,5 @@ export class UserRouter {
         })
     }
 }
+
+export const userRouter = new UserRouter().router;

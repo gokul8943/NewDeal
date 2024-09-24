@@ -27,7 +27,7 @@ const userSchema = new Schema<IUserSchema>({
     },
     googleId: {
         type: Boolean,
-        required: true,
+        
     },
     password: {
         type: String,

@@ -8,10 +8,10 @@ export class UserController{
         this.userUsecase = userusecase;
     }
 
-    async register(req:any,res:any):Promise<any>{
+    async register(req:Request,res:any):Promise<void>{
         try {
             const userData = req.body
-            const { email, password, username, phone } = userData
+            const { email, password, name, phone } = userData           
             const userDetails = await this.userUsecase.isUserExist(email);
             if (userDetails !== null) {
                 res.status(409).json({ message: "User already exists" });

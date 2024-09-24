@@ -15,7 +15,7 @@ export class userRepository{
     }
     async register(userData: UserEntity): Promise<any> {
         try {
-            const user = await userModel.create(userData)
+            const user = await userModel.create(userData)  
             return user;
         } catch (error) {
             console.error("An error occoured", error)
