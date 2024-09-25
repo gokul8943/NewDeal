@@ -47,4 +47,13 @@ export class userRepository {
         let response = await this.OTPModel.find({ email }).sort({ createdAt: -1 }).limit(1);
         return response
     }
+    async access(uid:string,access:boolean){
+        try {
+            const response = await this.UserModel.findByIdAndUpdate(uid,{isActive:access})
+            return response
+        } catch (error) {
+            console.log(error);
+            throw error
+        }
+    }
 }

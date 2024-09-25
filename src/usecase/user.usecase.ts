@@ -26,4 +26,7 @@ export class UserUsecase {
     async otpVerify(email:string){
         return this.UserRepository.otpVerify(email)
     }
+    async access(uid:string,active:boolean){
+        return this.UserRepository.access(uid,active)
+    }
 }
