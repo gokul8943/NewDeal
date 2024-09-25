@@ -22,4 +22,20 @@ export class ListingController{
         }
       
     }
+    async editListing(req:Request,res:Response):Promise<any>{
+        try {
+            const {data,} = req.body
+            const {listId} = req.params
+            const response = await this.listingUsecase.editListing(data,listId)
+            if(response){
+               return res.status(200).json({message:"success",data:response})
+            }else{
+               return res.status(400).json({message:"failed"})
+            }
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({message:"Internal server error"})
+        }
+       
+    }
 }

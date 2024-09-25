@@ -15,6 +15,9 @@ export class ListingRoute{
         this.router.post("/user/listing",(req:Request,res:Response)=>{
             return this.listingController.lisitng(req,res)
         })
+        this.router.put("/user/editListing/:lsitId",(req:Request,res:Response)=>{
+            return this.listingController.editListing(req,res)
+        })
     }
 }
 export const listingRouter = new ListingRoute().router;

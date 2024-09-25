@@ -7,4 +7,7 @@ export class ListingUsecase{
     async listing(data:any):Promise<any>{
         return this.ListingRepository.listing(data)
     }
+    async editListing(data:any,listId:string):Promise<any>{
+        return this.ListingRepository.editListing(data,listId)
+    }
 }
