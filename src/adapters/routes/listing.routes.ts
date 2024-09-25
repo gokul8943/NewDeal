@@ -13,11 +13,12 @@ export class ListingRoute{
 
     constructor(){
         this.router.post("/user/listing",(req:Request,res:Response)=>{
-            return this.listingController.lisitng(req,res)
-        })
-        this.router.put("/user/editListing/:lsitId",(req:Request,res:Response)=>{
-            return this.listingController.editListing(req,res)
-        })
+            return this.listingController.listing(req,res)
+        });
+        this.router.put("/user/editListing/:listId", (req: Request, res: Response) => {
+            return this.listingController.editListing(req, res);  // Fixed typo in method name
+        });
+        
     }
 }
 export const listingRouter = new ListingRoute().router;

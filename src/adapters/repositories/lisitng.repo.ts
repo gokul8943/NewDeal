@@ -17,28 +17,24 @@ export class ListingRepository {
             console.log(error);
         }
     }
-    async editListing(data:any,listId:string):Promise <any>{
+    async editListing(data: any, listId: string): Promise<any> {
         try {
-            console.log('id',listId);
-            console.log('data---',data);
-            
-            
-            const property = await this.listingModel.findByIdAndUpdate(
-                listId, 
-                { 
-                    $set: data 
-                },
+            const updatedListing = await this.listingModel.findByIdAndUpdate(
+                listId,
+                { $set: data },
                 { new: true } 
             );
-            if (!property) {
-                console.log("Failed to find property with ID:", listId);
+    
+            if (!updatedListing) {
+                console.log("Failed to find listing with ID:", listId);
                 return null;
             }
-            return property; 
-                
+    
+            return updatedListing;
         } catch (error) {
-            console.log(error);
-            
+            console.error("Repository error:", error);
+            throw error;  
         }
     }
+    
 }

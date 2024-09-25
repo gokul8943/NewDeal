@@ -7,7 +7,7 @@ export class ListingController{
         this.listingUsecase = listingusecase;
     }
 
-    async lisitng(req:Request,res:Response){
+    async listing(req:Request,res:Response){
         try {
             const data = req.body
             const response = await this.listingUsecase.listing(data);
@@ -22,20 +22,25 @@ export class ListingController{
         }
       
     }
-    async editListing(req:Request,res:Response):Promise<any>{
+    async editListing(req: Request, res: Response): Promise<any> {
         try {
-            const {data,} = req.body
-            const {listId} = req.params
-            const response = await this.listingUsecase.editListing(data,listId)
-            if(response){
-               return res.status(200).json({message:"success",data:response})
-            }else{
-               return res.status(400).json({message:"failed"})
+            const data = req.body;
+            const listId = req.params.listId;
+    
+            if (!listId || !data) {
+                return res.status(400).json({ message: "Invalid request: listId or data missing" });
+            }
+    
+            const response = await this.listingUsecase.editListing(data, listId);
+            
+            if (response) {
+                return res.status(200).json({ message: "success", data: response });
+            } else {
+                return res.status(404).json({ message: "Listing not found" });
             }
         } catch (error) {
-            console.log(error);
-            res.status(500).json({message:"Internal server error"})
+            console.error("Controller error:", error);
+            return res.status(500).json({ message: "Internal server error" });
         }
-       
-    }
+    }    
 }
