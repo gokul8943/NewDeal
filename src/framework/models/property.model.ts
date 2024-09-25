@@ -25,6 +25,10 @@ const PropertySchema: Schema<IPropertySchema> = new Schema({
     area: { type: Number,  },
     yearBuilt: { type: Number }
   },
+  isActive: {
+    type: Boolean,
+    default: true
+},
   amenities: [{ type: String }],
   images: [{
     url: { type: String,  },

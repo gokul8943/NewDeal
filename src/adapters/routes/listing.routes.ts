@@ -16,7 +16,10 @@ export class ListingRoute{
             return this.listingController.listing(req,res)
         });
         this.router.put("/user/editListing/:listId", (req: Request, res: Response) => {
-            return this.listingController.editListing(req, res);  // Fixed typo in method name
+            return this.listingController.editListing(req, res);
+        });
+        this.router.post("/user/accessListing/:listId", (req: Request, res: Response) => {
+            return this.listingController.accessListing(req, res);  
         });
         
     }

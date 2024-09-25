@@ -10,4 +10,7 @@ export class ListingUsecase{
     async editListing(data:any,listId:string):Promise<any>{
         return this.ListingRepository.editListing(data,listId)
     }
+    async accessListing(listId:string,active:boolean):Promise<any>{
+        return this.ListingRepository.accessListing(listId,active)
+    }
 }

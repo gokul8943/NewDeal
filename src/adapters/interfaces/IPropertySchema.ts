@@ -36,6 +36,7 @@ export interface IPropertySchema extends Document {
     location: ILocation;
     features: IFeatures;
     amenities: string[];
+    isActive:boolean;
     images: IImage[];
     owner: mongoose.Types.ObjectId;
     createdAt: Date;

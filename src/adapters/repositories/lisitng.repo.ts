@@ -36,5 +36,14 @@ export class ListingRepository {
             throw error;  
         }
     }
+    async accessListing(listId:string,access:boolean){
+        try {
+            const response = await this.listingModel.findByIdAndUpdate(listId,{ isActive: access })
+            return response
+        } catch (error) {
+            console.log("Repository error:",error);
+            throw error
+        }
+    }
     
 }
