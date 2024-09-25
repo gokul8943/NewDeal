@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { dbConnection } from './database/dbconnection';
 import { userRouter } from '../adapters/routes/user.routes';
+import { listingRouter } from '../adapters/routes/listing.routes';
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //routers
 app.use(userRouter)
+app.use(listingRouter)
 
 
 
