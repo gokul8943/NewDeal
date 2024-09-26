@@ -26,7 +26,7 @@ export class UserRouter {
         this.router.post("/user/otpVerify", (req: Request, res: Response) => {
             this.userController.otpVerify(req, res)
         })
-        this.router.post("/user/access", (req: Request, res: Response) => {
+        this.router.post("/user/access/:uid", (req: Request, res: Response) => {
             this.userController.access(req, res)
         })
 

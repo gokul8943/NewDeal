@@ -131,7 +131,7 @@ export class UserController {
     async access(req:Request,res:Response):Promise<any>{
         try {
             const uid = req.params.uid;
-            const active = req.body.isActive
+            const active = req.body.active
             const response = await this.userUsecase.access(uid,active)
             if(response){
              return res.status(200).json({message:"success"})
