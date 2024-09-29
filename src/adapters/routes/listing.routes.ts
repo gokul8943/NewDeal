@@ -4,6 +4,7 @@ import Property from "../../framework/models/property.model";
 import { ListingUsecase } from "../../usecase/lisiting.usecase";
 import { ListingController } from "../controllers/listing.controller";
 import { ListingRepository } from "../repositories/lisitng.repo";
+import upload from "../../utils/multer";
 
 export class ListingRoute{
     router = Router()
@@ -12,7 +13,7 @@ export class ListingRoute{
     listingController = new ListingController(this.listingUsecase);
 
     constructor(){
-        this.router.post("/user/listing",(req:Request,res:Response)=>{
+        this.router.post("/user/listing",upload.array('images', 10),(req:Request,res:Response)=>{
             return this.listingController.listing(req,res)
         });
         this.router.put("/user/editListing/:listId", (req: Request, res: Response) => {

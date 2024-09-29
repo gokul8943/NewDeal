@@ -3,38 +3,36 @@ import { IPropertySchema } from '../../adapters/interfaces/IPropertySchema';
 
 // Create the Mongoose schema
 const PropertySchema: Schema<IPropertySchema> = new Schema({
-  title: { type: String,  },
-  description: { type: String,  },
-  type: { type: String, enum: ['House', 'Apartment', 'Condo', 'Land'],  },
-  status: { type: String, enum: ['For Sale', 'For Rent', 'Sold', 'Rented'],  },
-  price: { type: Number,  },
+  title: { type: String, },
+  description: { type: String, },
+  type: { type: String, enum: ['House', 'Apartment', 'Condo', 'Land'], },
+  status: { type: String, enum: ['For Sale', 'For Rent', 'Sold', 'Rented'], },
+  price: { type: Number, },
   address: {
-    street: { type: String,  },
-    city: { type: String,  },
-    state: { type: String,  },
-    zipCode: { type: String,  },
-    country: { type: String,  }
+    street: { type: String, },
+    city: { type: String, },
+    state: { type: String, },
+    zipCode: { type: String, },
+    country: { type: String, }
   },
   location: {
     type: { type: String, enum: ['Point'] },
     coordinates: { type: [Number] }
   },
   features: {
-    bedrooms: { type: Number,  },
-    bathrooms: { type: Number,  },
-    area: { type: Number,  },
+    bedrooms: { type: Number, },
+    bathrooms: { type: Number, },
+    area: { type: Number, },
     yearBuilt: { type: Number }
   },
-  isActive: {
-    type: Boolean,
-    default: true
-},
-  amenities: [{ type: String }],
-  images: [{
-    url: { type: String,  },
-    caption: { type: String }
+  availability: [{
+    status: { type: String, enum: ['available', 'booked', 'unavailable'] }
   }],
-  owner: { type: Schema.Types.ObjectId, ref: 'User',  },
+  isActive: { type: Boolean, default: true },
+  images: [{
+    url: { type: String, },
+  }],
+  owner: { type: Schema.Types.ObjectId, ref: 'User', },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });

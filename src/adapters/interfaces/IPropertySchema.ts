@@ -15,7 +15,6 @@ interface ILocation {
   
   interface IImage {
     url: string;
-    caption?: string;
   }
   // Define interfaces for nested objects
 interface IAddress {
@@ -24,6 +23,10 @@ interface IAddress {
     state: string;
     zipCode: string;
     country: string;
+  }
+
+  interface IAvailability {
+    status: 'available' | 'booked' | 'unavailable';
   }
   
 export interface IPropertySchema extends Document {
@@ -35,8 +38,10 @@ export interface IPropertySchema extends Document {
     address: IAddress;
     location: ILocation;
     features: IFeatures;
+    availability:IAvailability;
     amenities: string[];
     isActive:boolean;
+    isAvailable:boolean;
     images: IImage[];
     owner: mongoose.Types.ObjectId;
     createdAt: Date;

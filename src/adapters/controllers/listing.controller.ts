@@ -9,7 +9,15 @@ export class ListingController {
 
     async listing(req: Request, res: Response) {
         try {
-            const data = req.body
+            const datas = req.body
+            const images = (req.files as Express.Multer.File[]).map((file) => ({
+                url: file.path, 
+            }));
+        
+              const data = {
+                ...datas,
+                images, 
+              };
             const response = await this.listingUsecase.listing(data);
             if (response) {
                 return res.status(200).json({ message: "success", data: response })

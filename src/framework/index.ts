@@ -4,6 +4,7 @@ import { dbConnection } from './database/dbconnection';
 import { userRouter } from '../adapters/routes/user.routes';
 import { listingRouter } from '../adapters/routes/listing.routes';
 
+
 dotenv.config();
 
 const app: Express = express();
