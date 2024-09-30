@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors'
 import { dbConnection } from './database/dbconnection';
 import { userRouter } from '../adapters/routes/user.routes';
 import { listingRouter } from '../adapters/routes/listing.routes';
@@ -12,8 +13,14 @@ const port: string = process.env.PORT!;
 
 dbConnection();
 
+const corsOptions = {
+    origin: ['http://localhost:8080'],
+    credentials: true,
+  };
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors(corsOptions))
 
 //routers
 app.use(userRouter)
