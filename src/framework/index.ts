@@ -9,12 +9,12 @@ import { listingRouter } from '../adapters/routes/listing.routes';
 dotenv.config();
 
 const app: Express = express();
-const port: string = process.env.PORT!;
+const port: string = process.env.PORT || '5000';
 
 dbConnection();
 
 const corsOptions = {
-    origin: ['http://localhost:8080'],
+    origin: ['http://localhost:5173'],
     credentials: true,
   };
 
