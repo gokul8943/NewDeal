@@ -16,6 +16,9 @@ export class ListingRoute{
         this.router.post("/user/creatingListing",upload.array('images', 10),(req:Request,res:Response)=>{
             return this.listingController.listing(req,res)
         });
+        this.router.get("/user/getListing",(req:Request,res:Response) =>{
+            return this.listingController.getListing(req,res)
+        })
         this.router.put("/user/editListing/:listId", (req: Request, res: Response) => {
             return this.listingController.editListing(req, res);
         });

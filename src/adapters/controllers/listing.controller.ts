@@ -30,6 +30,20 @@ export class ListingController {
         }
 
     }
+
+    async getListing(req:Request,res:Response): Promise<any>{
+        try {
+            const response = await this.listingUsecase.getListing()
+            if(response){
+                return res.status(200).json({message:"Success"})
+            }else{
+                return res.status(400).json({message:"failed"})
+            }
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({message:"Internal server error"})
+        }
+    } 
     async editListing(req: Request, res: Response): Promise<any> {
         try {
             const data = req.body;

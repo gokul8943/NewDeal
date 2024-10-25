@@ -17,6 +17,15 @@ export class ListingRepository {
             console.log(error);
         }
     }
+    async getListing(){
+        try {
+            const data = await listingModel.find()
+             return data
+        } catch (error) {
+            console.log(error);
+            throw error
+        }
+    }
     async editListing(data: any, listId: string): Promise<any> {
         try {
             const updatedListing = await this.listingModel.findByIdAndUpdate(
