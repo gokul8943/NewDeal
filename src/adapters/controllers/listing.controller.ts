@@ -30,12 +30,9 @@ export class ListingController {
         }
 
     }
-
     async getListing(req:Request,res:Response){
         try {
-            const response = await this.listingUsecase.getListing()
-            console.log('res',response);
-            
+            const response = await this.listingUsecase.getListing()  
             if(response){
                 return res.status(200).json({message:"Success",response})
             }else{
@@ -46,6 +43,21 @@ export class ListingController {
             return res.status(500).json({message:"Internal server error"})
         }
     } 
+
+    async getOneListing(req:Request,res:Response):Promise<any>{
+        try {
+            const lid = req.body
+            const data = await this.listingUsecase.getOneListing(lid)
+            if(data){
+                return res.status(200).json({message:"Success",data})
+            }else{
+                return res.status(400).json({message:"Failed to find"})
+            }
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({message:"Internal server error"})
+        }
+    }
     async editListing(req: Request, res: Response): Promise<any> {
         try {
             const data = req.body;
