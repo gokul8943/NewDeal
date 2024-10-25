@@ -31,11 +31,13 @@ export class ListingController {
 
     }
 
-    async getListing(req:Request,res:Response): Promise<any>{
+    async getListing(req:Request,res:Response){
         try {
             const response = await this.listingUsecase.getListing()
+            console.log('res',response);
+            
             if(response){
-                return res.status(200).json({message:"Success"})
+                return res.status(200).json({message:"Success",response})
             }else{
                 return res.status(400).json({message:"failed"})
             }

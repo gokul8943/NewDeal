@@ -20,6 +20,8 @@ export class ListingRepository {
     async getListing(){
         try {
             const data = await listingModel.find()
+            console.log('data',data);
+            
              return data
         } catch (error) {
             console.log(error);

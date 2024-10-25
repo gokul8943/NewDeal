@@ -22,10 +22,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions))
 
+
 //routers
 app.use(userRouter)
 app.use(listingRouter)
 
+// // Error handling middleware for invalid JSON
+// app.use((err: any, req: Request, res: Response, next: Function) => {
+//   if (err instanceof SyntaxError && (err as any).status === 400 && 'body' in err) {
+//       console.error('Invalid JSON:', err);
+//       return res.status(400).json({ message: 'Invalid JSON syntax' });
+//   }
+//   next();
+// });
 
 
 app.listen(port, () => {
