@@ -17,18 +17,16 @@ export class ListingRepository {
             console.log(error);
         }
     }
-    async getListing(){
+    async getListing() {
         try {
             const data = await listingModel.find()
-            console.log('data',data);
-            
-             return data
+            return data
         } catch (error) {
             console.log(error);
             throw error
         }
     }
-    async getOneListing(lid:string){
+    async getOneListing(lid: string) {
         try {
             const data = await listingModel.findById(lid)
             return data
@@ -42,28 +40,28 @@ export class ListingRepository {
             const updatedListing = await this.listingModel.findByIdAndUpdate(
                 listId,
                 { $set: data },
-                { new: true } 
+                { new: true }
             );
-    
+
             if (!updatedListing) {
                 console.log("Failed to find listing with ID:", listId);
                 return null;
             }
-    
+
             return updatedListing;
         } catch (error) {
             console.error("Repository error:", error);
-            throw error;  
+            throw error;
         }
     }
-    async accessListing(listId:string,access:boolean){
+    async accessListing(listId: string, access: boolean) {
         try {
-            const response = await this.listingModel.findByIdAndUpdate(listId,{ isActive: access })
+            const response = await this.listingModel.findByIdAndUpdate(listId, { isActive: access })
             return response
         } catch (error) {
-            console.log("Repository error:",error);
+            console.log("Repository error:", error);
             throw error
         }
     }
-    
+
 }
