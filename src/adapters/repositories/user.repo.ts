@@ -47,22 +47,25 @@ export class userRepository {
         let response = await this.OTPModel.find({ email }).sort({ createdAt: -1 }).limit(1);
         return response
     }
-    async access(uid:string,access:boolean){
+    async access(uid: string, access: boolean) {
         try {
-            const response = await this.UserModel.findByIdAndUpdate(uid,{isActive:access})
+            const response = await this.UserModel.findByIdAndUpdate(uid, { isActive: access })
             return response
         } catch (error) {
             console.log(error);
             throw error
         }
     }
-    async editProfile(uid:string,data:any){
+    async editProfile(uid: string, data: any) {
         try {
-            const response = await this.UserModel.findByIdAndUpdate(uid,{$set:data})
+            const response = await this.UserModel.findByIdAndUpdate(
+                uid,
+                { $set: data },
+                { new: true })
             return response
         } catch (error) {
             console.log(error);
-            throw  error
+            throw error
         }
     }
 }
