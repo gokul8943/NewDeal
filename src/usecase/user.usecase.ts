@@ -29,4 +29,7 @@ export class UserUsecase {
     async access(uid:string,active:boolean){
         return this.UserRepository.access(uid,active)
     }
+    async editProfile(uid:string,data:any){
+        return this.UserRepository.editProfile(uid,data)
+    }
 }

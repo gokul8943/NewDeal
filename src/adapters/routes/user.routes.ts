@@ -29,6 +29,9 @@ export class UserRouter {
         this.router.post("/user/access/:uid", (req: Request, res: Response) => {
             this.userController.access(req, res)
         })
+        this.router.post("/user/editPtofile/:uid", (req: Request, res: Response) => {
+            this.userController.editProfile(req, res)
+        })
 
     }
 }

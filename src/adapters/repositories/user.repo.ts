@@ -56,4 +56,13 @@ export class userRepository {
             throw error
         }
     }
+    async editProfile(uid:string,data:any){
+        try {
+            const response = await this.UserModel.findByIdAndUpdate(uid,{$set:data})
+            return response
+        } catch (error) {
+            console.log(error);
+            throw  error
+        }
+    }
 }

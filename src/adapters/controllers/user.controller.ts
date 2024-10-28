@@ -146,6 +146,20 @@ export class UserController {
            console.log("Controller error:",error);
             return res.status(500).json({message:"Internal server error"})
         }
-     
+    }
+    async editProfile(req:Request,res:Response):Promise<any>{
+        try {
+            const uid = req.params.uid;
+            const data = req.body
+            const response = await this.userUsecase.editProfile(uid,data)
+            if(response){
+                return res.status(200).json({messsage:"Profile edit succesfully"})
+            }else{
+                return res.status(400).json({message:"The profile not found"})
+            }
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({message:"Internal server error"})
+        }
     }
 }
