@@ -17,7 +17,7 @@ const userSchema = new Schema<IUserSchema>({
         type: String,
         required: true,
     },
-    phoneNumber: {
+    phone: {
         type: Number,
     },
     email: {

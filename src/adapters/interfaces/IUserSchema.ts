@@ -5,7 +5,7 @@ export interface IUserSchema extends Document {
     name: string,
     email: string,
     password: string,
-    phoneNumber: number,
+    phone: number,
     profilePicture: string,
     role: string,
     isVerified: boolean,
