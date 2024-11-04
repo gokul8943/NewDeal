@@ -13,8 +13,12 @@ interface ILocation {
     yearBuilt?: number;
   }
   
-  interface IImage {
-    url: string;
+  interface Image {
+    uid: string;
+    name: string;
+    size: number;
+    type: string;
+    thumbUrl: string;
   }
   // Define interfaces for nested objects
 interface IAddress {
@@ -42,7 +46,7 @@ export interface IPropertySchema extends Document {
     amenities: string[];
     isActive:boolean;
     isAvailable:boolean;
-    images: IImage[];
+    image: Image[];
     owner: mongoose.Types.ObjectId;
     createdAt: Date;
     updatedAt: Date;
