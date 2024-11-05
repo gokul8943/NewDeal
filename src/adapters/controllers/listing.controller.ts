@@ -18,9 +18,7 @@ export class ListingController {
               const data = {
                 ...datas,
                 images, 
-              };
-              console.log('vanooo',data);
-              
+              };            
             const response = await this.listingUsecase.listing(data);
             if (response) {
                 return res.status(200).json({ message: "success", data: response })

@@ -18,7 +18,7 @@ const corsOptions = {
   credentials: true,
 };
 
-app.use(express.json({ limit: '20mb' })); // Set JSON body size limit
+app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ limit: '20mb', extended: true }));
 app.use(cors(corsOptions))
 
