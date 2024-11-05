@@ -17,10 +17,20 @@ export class ListingRepository {
             console.log(error);
         }
     }
-    async getListing() {
+    async getListing(page: any, search: any) {
         try {
-            const data = await listingModel.find()
-            return data
+            const limit = 10
+            const searchQuery = search
+                ? { title: { $regex: search, $options: 'i' } }
+                : {};
+            const query = {
+                ...searchQuery
+            };
+            const total = await this.listingModel.countDocuments(query);
+            const data = await listingModel.find(query).sort({ createdAt: -1 })
+                .skip((page - 1) * limit)
+                .limit(limit).exec();
+            return { data, total }
         } catch (error) {
             console.log(error);
             throw error

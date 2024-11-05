@@ -32,8 +32,9 @@ export class ListingController {
 
     }
     async getListing(req:Request,res:Response){
+        const { page = 1, search = '' } = req.query;
         try {
-            const response = await this.listingUsecase.getListing()  
+            const response = await this.listingUsecase.getListing(page,search)  
             if(response){
                 return res.status(200).json({message:"Success",response})
             }else{

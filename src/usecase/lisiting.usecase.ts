@@ -10,8 +10,8 @@ export class ListingUsecase{
     async editListing(data:any,listId:string):Promise<any>{
         return this.ListingRepository.editListing(data,listId)
     }
-    async getListing(){
-        return this.ListingRepository.getListing()
+    async getListing(page:any,search:any){
+        return this.ListingRepository.getListing(page,search)
     }
     async getOneListing(lid:string){
         return this.ListingRepository.getOneListing(lid)
