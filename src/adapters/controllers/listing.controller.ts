@@ -48,9 +48,7 @@ export class ListingController {
 
     async getOneListing(req:Request,res:Response):Promise<any>{
         try {
-            const { lid } = req.body
-            console.log('lid',lid);
-            
+           const lid = req.params.lid
             const data = await this.listingUsecase.getOneListing(lid)
             if(data){
                 return res.status(200).json({message:"Success",data})
