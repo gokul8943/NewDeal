@@ -39,7 +39,7 @@ export class ListingRepository {
     async getOneListing(lid: string) {
         try {
             const objectId = new mongoose.Types.ObjectId(lid)
-            const data = await listingModel.findById(objectId)
+            const data = await listingModel.findById(lid)
             return data
         } catch (error) {
             console.log(error);
