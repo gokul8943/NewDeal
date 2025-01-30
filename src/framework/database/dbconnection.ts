@@ -4,7 +4,6 @@ dotenv.config()
 
 export const dbConnection = async () => {
     const mongoUrl: string = process.env.MONGO_URI!  
-    console.log(mongoUrl)
 
     if (!mongoUrl) {
         console.error('MongoDB connection URL is not defined.');
