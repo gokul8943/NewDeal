@@ -48,7 +48,7 @@ export class UserController {
             return
         }
         if (user && (await bcrypt.compare(password, user.password))) {
-            const accessToken = jwt.sign({userId:user._id},process.env.JWT_SECRET as string,{ expiesIn:'30m'});
+            const accessToken = jwt.sign({userId:user._id},process.env.JWT_SECRET as string, { expiresIn:'30m'});
             const refreshToken = jwt.sign({userId:user._id},process.env.JWT_SECRET as string,{expiresIn:"30d"});
             const { password, ...userWithoutPassword } = user.toObject();
             res.status(200).json({ message: "login success",accessToken, refreshToken, user: userWithoutPassword })
