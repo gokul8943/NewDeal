@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import bcrypt from 'bcrypt'
+import jwt, { JwtPayload, Secret } from 'jsonwebtoken';
 import otpGenerator from 'otp-generator';
 import { UserUsecase } from "../../usecase/user.usecase";
 import transporter from "../../framework/services/nodemailer";
@@ -47,8 +48,10 @@ export class UserController {
             return
         }
         if (user && (await bcrypt.compare(password, user.password))) {
+            const accessToken = jwt.sign({userId:user._id},process.env.JWT_SECRET as string,{ expiesIn:'30m'});
+            const refreshToken = jwt.sign({userId:user._id},process.env.JWT_SECRET as string,{expiresIn:"30d"});
             const { password, ...userWithoutPassword } = user.toObject();
-            res.status(200).json({ message: "login success", user: userWithoutPassword })
+            res.status(200).json({ message: "login success",accessToken, refreshToken, user: userWithoutPassword })
         } else {
             res.status(406).json({
                 message: 'Wrong password'
