@@ -6,7 +6,11 @@ import { UserUsecase } from "../../usecase/user.usecase";
 import transporter from "../../framework/services/nodemailer";
 import Handlebars from "handlebars";
 import fs from "fs"
+import dotenv from 'dotenv'
 
+dotenv.config()
+
+const jwtSecret: any = process.env.JWT_SECRET
 export class UserController {
     private readonly userUsecase: UserUsecase;
     constructor(userusecase: UserUsecase) {
@@ -49,8 +53,8 @@ export class UserController {
         }
         if (user && (await bcrypt.compare(password, user.password))) {
             
-            const accessToken = jwt.sign({userId:user._id},process.env.JWT_SECRET as string, { expiresIn:'30m'});
-            const refreshToken = jwt.sign({userId:user._id},process.env.JWT_SECRET as string,{expiresIn:"30d"});
+            const accessToken = jwt.sign({userId:user._id},process.env.jwtSecret as string, { expiresIn:'30m'});
+            const refreshToken = jwt.sign({userId:user._id},process.env.jwtSecret as string,{expiresIn:"30d"});
 
             const { password, ...userWithoutPassword } = user.toObject();
             res.status(200).json({ message: "login success",accessToken, refreshToken, user: userWithoutPassword })
@@ -163,6 +167,33 @@ export class UserController {
         } catch (error) {
             console.log(error)
             return res.status(500).json({message:"Internal server error"})
+        }
+    }
+    async getRefreshToken(req: Request, res: Response) {
+        const { refreshToken } = req.body
+
+        if (!refreshToken) {
+            res.status(400).json({ Message: 'Refresh token required' })
+            return
+        }
+        try {
+            const decoded: any = jwt.verify(
+                refreshToken,
+                jwtSecret
+            );
+
+            const user: any = await this.userUsecase.refreshFindUser(decoded.userId);
+            if (!user) {
+                res.status(404).json({ message: "User not found" });
+                return;
+            }
+            const accessToken = jwt.sign({
+                userId: user._id
+            }, jwtSecret ,{ expiresIn: '30m' })
+            res.json({ accessToken });
+        } catch (error) {
+            res.status(500).json({ message: 'internal server error' });
+            console.log(error);
         }
     }
 }

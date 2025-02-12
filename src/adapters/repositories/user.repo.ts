@@ -68,4 +68,13 @@ export class userRepository {
             throw error
         }
     }
+    async refreshFindUser(uid: string) {
+        try {
+            const user = await userModel.findById(uid);
+            return user
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
 }

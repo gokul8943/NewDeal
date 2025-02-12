@@ -32,4 +32,7 @@ export class UserUsecase {
     async editProfile(uid:string,data:any){
         return this.UserRepository.editProfile(uid,data)
     }
+    async refreshFindUser(uid: string){
+        return this.UserRepository.refreshFindUser(uid)
+    }
 }
