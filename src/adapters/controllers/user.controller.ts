@@ -8,7 +8,7 @@ import Handlebars from "handlebars";
 import fs from "fs"
 import dotenv from 'dotenv'
 
-dotenv.config()
+dotenv.config();
 
 const jwtSecret: any = process.env.JWT_SECRET
 export class UserController {
@@ -44,6 +44,8 @@ export class UserController {
     }
     async login(req: Request, res: Response): Promise<any> {
         const { email, password } = req.body
+        console.log('data coming',req.body);
+        
         const user = await this.userUsecase.isUserExist(email)
         if (user === null) {
             res.status(400).json({
@@ -53,9 +55,11 @@ export class UserController {
         }
         if (user && (await bcrypt.compare(password, user.password))) {
             
-            const accessToken = jwt.sign({userId:user._id},process.env.jwtSecret as string, { expiresIn:'30m'});
-            const refreshToken = jwt.sign({userId:user._id},process.env.jwtSecret as string,{expiresIn:"30d"});
+            const accessToken = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '30m' });
+            const refreshToken = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '30d' });
 
+            console.log('acesstoken:','resdef:',accessToken,refreshToken);
+            
             const { password, ...userWithoutPassword } = user.toObject();
             res.status(200).json({ message: "login success",accessToken, refreshToken, user: userWithoutPassword })
         } else {
