@@ -21,8 +21,7 @@ export class UserController {
         try {
             const userData = req.body            
             const { email, password, name, phone } = userData
-            console.log('o-00-00',userData);
-            
+   
             const userDetails = await this.userUsecase.isUserExist(email);
             if (userDetails !== null) {
                 res.status(409).json({ message: "User already exists" });
@@ -44,7 +43,6 @@ export class UserController {
     }
     async login(req: Request, res: Response): Promise<any> {
         const { email, password } = req.body
-        console.log('data coming',req.body);
         
         const user = await this.userUsecase.isUserExist(email)
         if (user === null) {
