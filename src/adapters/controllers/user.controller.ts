@@ -55,9 +55,7 @@ export class UserController {
             
             const accessToken = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '30m' });
             const refreshToken = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '30d' });
-
-            console.log('acesstoken:','resdef:',accessToken,refreshToken);
-            
+             
             const { password, ...userWithoutPassword } = user.toObject();
             res.status(200).json({ message: "login success",accessToken, refreshToken, user: userWithoutPassword })
         } else {
