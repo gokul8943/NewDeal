@@ -22,6 +22,9 @@ export class ListingRoute{
         this.router.get("/user/getOnelisting/:lid",(req:Request,res:Response)=>{
             return this.listingController.getOneListing(req,res)
         })
+        this.router.get("/user/userAddedlisting",(req:Request,res:Response)=>{
+            return this.listingController.getUserAddedListing(req,res)
+        })
         this.router.put("/user/editListing/:listId", (req: Request, res: Response) => {
             return this.listingController.editListing(req, res);
         });

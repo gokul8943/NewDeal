@@ -46,6 +46,17 @@ export class ListingRepository {
             throw error
         }
     }
+
+    async getUserAddedListing(userId:string):Promise<any>{
+     try {
+        const objectId = new mongoose.Types.ObjectId(userId);
+
+        const data = await this.listingModel.findById({ userId: objectId })
+        return data
+     } catch (error) {
+        
+     }
+    }
     async editListing(data: any, listId: string): Promise<any> {
         try {
             const updatedListing = await this.listingModel.findByIdAndUpdate(

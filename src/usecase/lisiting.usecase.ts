@@ -16,6 +16,9 @@ export class ListingUsecase{
     async getOneListing(lid:string){
         return this.ListingRepository.getOneListing(lid)
     }
+    async getUserAddedListing(userId:string){
+        return this.ListingRepository.getUserAddedListing(userId)
+    }
     async accessListing(listId:string,active:boolean):Promise<any>{
         return this.ListingRepository.accessListing(listId,active)
     }

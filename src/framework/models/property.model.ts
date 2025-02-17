@@ -18,6 +18,7 @@ const ImageSchema: Schema<IImage> = new Schema<IImage>({
 });
 
 const PropertySchema: Schema<IPropertySchema> = new Schema({
+  userId:{type:String},
   title: { type: String, },
   description: { type: String, },
   type: { type: String, enum: ['House', 'Apartment', 'Condo', 'Land'], },

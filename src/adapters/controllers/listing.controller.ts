@@ -10,15 +10,19 @@ export class ListingController {
     async listing(req: Request, res: Response) {
         try {
             const datas = req.body
-            const images = Array.isArray(req.files) 
-            ? (req.files as Express.Multer.File[]).map((file) => ({
-                  url: file.path,
-              }))
-            : [];        
-              const data = {
+            const userId = req.body.userId
+            const images = Array.isArray(req.files)
+                ? (req.files as Express.Multer.File[]).map((file) => ({
+                    url: file.path,
+                }))
+                : [];
+            const data = {
+                userId,
                 ...datas,
-                images, 
-              };            
+                images,
+            };
+            console.log('data',data);
+            
             const response = await this.listingUsecase.listing(data);
             if (response) {
                 return res.status(200).json({ message: "success", data: response })
@@ -31,30 +35,42 @@ export class ListingController {
         }
 
     }
-    async getListing(req:Request,res:Response){
+    async getListing(req: Request, res: Response) {
         const { page = 1, search = '' } = req.query;
         try {
-            const response = await this.listingUsecase.getListing(page,search)  
-            if(response){
-                return res.status(200).json({message:"Success",response})
-            }else{
-                return res.status(400).json({message:"failed"})
+            const response = await this.listingUsecase.getListing(page, search)
+            if (response) {
+                return res.status(200).json({ message: "Success", response })
+            } else {
+                return res.status(400).json({ message: "failed" })
             }
         } catch (error) {
             console.log(error);
-            return res.status(500).json({message:"Internal server error"})
+            return res.status(500).json({ message: "Internal server error" })
         }
-    } 
+    }
 
-    async getOneListing(req:Request,res:Response):Promise<any>{
+    async getOneListing(req: Request, res: Response): Promise<any> {
         try {
-            const {lid} = req.params
+            const { lid } = req.params
             const data = await this.listingUsecase.getOneListing(lid)
-            if(data){
-                return res.status(200).json({message:"Success",data})
-            }else{
-                return res.status(400).json({message:"Failed to find"})
+            if (data) {
+                return res.status(200).json({ message: "Success", data })
+            } else {
+                return res.status(400).json({ message: "Failed to find" })
             }
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ message: "Internal server error" })
+        }
+    }
+
+    async getUserAddedListing(req:Request,res:Response) : Promise<any>{
+        try {
+            const userId = req.body.userId;
+            const userData = await this.listingUsecase.getUserAddedListing(userId)
+            return res.status(200).json({message:"Success",userData})
+
         } catch (error) {
             console.log(error);
             return res.status(500).json({message:"Internal server error"})
@@ -86,7 +102,7 @@ export class ListingController {
         try {
             const listId = req.params.listId
             const active = req.body.active
-            const response = await this.listingUsecase.accessListing(listId,active)
+            const response = await this.listingUsecase.accessListing(listId, active)
             if (response) {
                 return res.status(200).json({ message: "success" })
             } else {

@@ -34,6 +34,7 @@ interface IAddress {
   }
   
 export interface IPropertySchema extends Document {
+  userId:string;
     title: string;
     description: string;
     type: 'House' | 'Apartment' | 'Condo' | 'Land';
