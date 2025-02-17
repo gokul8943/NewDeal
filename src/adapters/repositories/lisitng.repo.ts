@@ -47,15 +47,36 @@ export class ListingRepository {
         }
     }
 
-    async getUserAddedListing(userId:string):Promise<any>{
-     try {
-        const objectId = new mongoose.Types.ObjectId(userId);
-
-        const data = await this.listingModel.findById({ userId: objectId })
-        return data
-     } catch (error) {
-        
-     }
+    async getUserAddedListing(userId: string): Promise<any> {
+        try {
+            const data = await this.listingModel.aggregate([
+                {
+                    $match: {
+                        userId:userId
+                    }
+                },
+                {
+                    $project: {
+                        _id: 1,
+                        title: 1,
+                        description: 1,
+                        type: 1,
+                        status: 1,
+                        price: 1,
+                        isActive: 1,
+                        image: { $slice: ["$image", 1] },
+                        createdAt: 1,
+                        updatedAt: 1
+                    }
+                },
+                {
+                    $sort: { createdAt: 1 }
+                }
+            ]);
+            return data;
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
     async editListing(data: any, listId: string): Promise<any> {
         try {
