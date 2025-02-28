@@ -67,7 +67,7 @@ export class ListingController {
 
     async getUserAddedListing(req:Request,res:Response) : Promise<any>{
         try {
-            const { userId } = req.params
+            const userId = req.body.userId;
             console.log('user',userId);
             
             const userData = await this.listingUsecase.getUserAddedListing(userId)  
